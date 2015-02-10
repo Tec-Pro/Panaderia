@@ -179,6 +179,7 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
         jLabel23 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
@@ -187,10 +188,7 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
 
         tablaMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Tipo", "Monto", "Fecha"

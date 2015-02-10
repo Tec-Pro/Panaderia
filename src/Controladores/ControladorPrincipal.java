@@ -7,10 +7,16 @@ package Controladores;
 
 import Interfaces.AplicacionGUI;
 import Interfaces.MovimientosGUI;
+import Modelos.Movimiento;
+import Modelos.Persona;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 
 /**
  *
@@ -33,11 +39,47 @@ public class ControladorPrincipal implements ActionListener{
         aplicacionGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         movimientosGUI = new MovimientosGUI();
+        ControladorMovimientos controladorMovimientos = new ControladorMovimientos(movimientosGUI);
         
         aplicacionGUI.getEscritorio().add(movimientosGUI);
         
-        ControladorMovimientos controladorMovimientos = new ControladorMovimientos(movimientosGUI);
         aplicacionGUI.setVisible(true);
+    }
+    
+    private void ActualizarListaMovimientos(){
+        movimientosGUI.getTablaMovimientosDefault().setRowCount(0);
+        abrirBase();
+        LazyList<Movimiento> lista = Movimiento.findAll();
+        
+        for(Movimiento m : lista){
+            Object[] row = new Object[5];
+            row[0] = m.get("id");
+            Persona p = Persona.first("id = ?", m.get("usuario_id"));
+            row[1] = p.getString("nyap");
+            row[2] = m.getString("tipo");
+            row[3] = m.getBigDecimal("monto");
+            row[4] = dateToMySQLDate(m.getDate("fecha"), true);
+            movimientosGUI.getTablaMovimientosDefault().addRow(row);
+        }
+        Base.close();
+    }
+    /*paraMostrar == true: retorna la fecha en formato dd/mm/yyyy (formato pantalla)
+     * paraMostrar == false: retorna la fecha en formato yyyy/mm/dd (formato SQL)
+     */
+    public String dateToMySQLDate(Date fecha, boolean paraMostrar) {
+        if (paraMostrar) {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+            return sdf.format(fecha);
+        } else {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            return sdf.format(fecha);
+        }
+    }
+    
+    public void abrirBase() {
+        if (!Base.hasConnection()) {
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/panaderia", "root", "root");
+        }
     }
     
     public static void main(String[] args) {
@@ -48,6 +90,7 @@ public class ControladorPrincipal implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(aplicacionGUI.getBtnMovimientos())){
             movimientosGUI.setVisible(true);
+            ActualizarListaMovimientos();
         }
     }
 }
