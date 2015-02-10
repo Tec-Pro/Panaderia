@@ -5,19 +5,144 @@
  */
 package Interfaces;
 
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author alan
  */
 public class MovimientosGUI extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form MovimientosGUI
-     */
+    DefaultTableModel tablaMovimientosDefault;
+    
     public MovimientosGUI() {
         initComponents();
+        boxTipo.setEnabled(false);
+        boxUsuario.setEnabled(false);
+        txtCalendario.setEnabled(false);
+        txtDescripcion.setEditable(false);
+        txtMonto.setEditable(false);
+        txtCalendario.setDate(Calendar.getInstance().getTime());
+        tablaMovimientosDefault = (DefaultTableModel) tablaMovimientos.getModel();
     }
 
+    public void LimpiarVentana(){
+        boxTipo.setSelectedIndex(0);
+        boxUsuario.setSelectedIndex(0);
+        txtCalendario.setDate(Calendar.getInstance().getTime());
+        txtDescripcion.setText("");
+        txtMonto.setText("");
+    }
+    
+    public void ApreteBotonNuevoModificar(){
+        boxTipo.setEnabled(true);
+        boxUsuario.setEnabled(true);
+        txtCalendario.setEnabled(true);
+        txtDescripcion.setEditable(true);
+        txtMonto.setEditable(true);
+        btnNuevoGuardar.setText("Guardar");
+        btnModif.setEnabled(false);
+        btnElim.setText("Cancelar");
+        btnElim.setEnabled(true);
+    }
+    
+    public void ApreteBotonGuardarEliminarCancelar(){
+        LimpiarVentana();
+        boxTipo.setEnabled(false);
+        boxUsuario.setEnabled(false);
+        txtCalendario.setEnabled(false);
+        txtDescripcion.setEditable(false);
+        txtMonto.setEditable(false);
+        btnNuevoGuardar.setText("Nuevo");
+        btnModif.setEnabled(false);
+        btnElim.setText("Eliminar");
+        btnElim.setEnabled(false);
+    }
+    
+    public void SeleccioneElementoDeLaTabla(){
+        boxTipo.setEnabled(false);
+        boxUsuario.setEnabled(false);
+        txtCalendario.setEnabled(false);
+        txtDescripcion.setEditable(false);
+        txtMonto.setEditable(false);
+        btnNuevoGuardar.setText("Nuevo");
+        btnModif.setEnabled(true);
+        btnElim.setText("Eliminar");
+        btnElim.setEnabled(true);
+    }
+    
+    public void setActionListener(ActionListener ac){
+        btnNuevoGuardar.addActionListener(ac);
+        btnModif.addActionListener(ac);
+        btnElim.addActionListener(ac);
+    }
+
+    public JComboBox getBoxTipo() {
+        return boxTipo;
+    }
+
+    public DefaultTableModel getTablaMovimientosDefault() {
+        return tablaMovimientosDefault;
+    }
+
+    public JTable getTablaMovimientos() {
+        return tablaMovimientos;
+    }
+
+    public JComboBox getBoxUsuario() {
+        return boxUsuario;
+    }
+
+    public JButton getBtnElim() {
+        return btnElim;
+    }
+
+    public JButton getBtnModif() {
+        return btnModif;
+    }
+
+    public JButton getBtnNuevoGuardar() {
+        return btnNuevoGuardar;
+    }
+
+    public JComboBox getBusquedaBoxTipo() {
+        return busquedaBoxTipo;
+    }
+
+    public JLabel getLblTotal() {
+        return lblTotal;
+    }
+
+    public JDateChooser getTxtCalendario() {
+        return txtCalendario;
+    }
+
+    public JTextArea getTxtDescripcion() {
+        return txtDescripcion;
+    }
+
+    public JDateChooser getTxtDesde() {
+        return txtDesde;
+    }
+
+    public JDateChooser getTxtHasta() {
+        return txtHasta;
+    }
+
+    public JTextField getTxtMonto() {
+        return txtMonto;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,27 +154,38 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
 
         panelImage1 = new org.edisoncor.gui.panel.PanelImage();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tablaMovimientos = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
+        boxTipo = new javax.swing.JComboBox();
         jLabel17 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtMonto = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        calendarioTxt = new com.toedter.calendar.JDateChooser();
+        txtCalendario = new com.toedter.calendar.JDateChooser();
         jLabel19 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        txtDescripcion = new javax.swing.JTextArea();
         jLabel20 = new javax.swing.JLabel();
-        calendarioTxt1 = new com.toedter.calendar.JDateChooser();
+        txtDesde = new com.toedter.calendar.JDateChooser();
         jLabel21 = new javax.swing.JLabel();
-        calendarioTxt2 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txtHasta = new com.toedter.calendar.JDateChooser();
+        btnNuevoGuardar = new javax.swing.JButton();
+        btnModif = new javax.swing.JButton();
+        btnElim = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        boxUsuario = new javax.swing.JComboBox();
+        jLabel22 = new javax.swing.JLabel();
+        busquedaBoxTipo = new javax.swing.JComboBox();
+        jLabel23 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Gestion de movimientos");
+
+        tablaMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -60,39 +196,55 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
                 "ID", "Nombre", "Tipo", "Monto", "Fecha"
             }
         ));
-        jScrollPane5.setViewportView(jTable3);
+        jScrollPane5.setViewportView(tablaMovimientos);
 
         jLabel15.setText("Usuario");
 
         jLabel16.setText("Tipo");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EGRESO PARTICULAR", "EGRESO PROVEEDOR", "INGRESO" }));
+        boxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "EGRESO PARTICULAR", "EGRESO PROVEEDOR", "INGRESO" }));
 
         jLabel17.setText("Monto");
 
         jLabel18.setText("Fecha");
 
-        calendarioTxt.setDateFormatString("dd-MM-yyyy");
+        txtCalendario.setDateFormatString("dd-MM-yyyy");
 
         jLabel19.setText("Descripcion");
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane6.setViewportView(jTextArea3);
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jScrollPane6.setViewportView(txtDescripcion);
 
         jLabel20.setText("Desde");
 
-        calendarioTxt1.setDateFormatString("dd-MM-yyyy");
+        txtDesde.setDateFormatString("dd-MM-yyyy");
 
         jLabel21.setText("Hasta");
 
-        calendarioTxt2.setDateFormatString("dd-MM-yyyy");
+        txtHasta.setDateFormatString("dd-MM-yyyy");
 
-        jButton1.setText("Nuevo");
+        btnNuevoGuardar.setText("Nuevo");
 
-        jButton2.setText("Modificar");
+        btnModif.setText("Modificar");
+        btnModif.setEnabled(false);
 
-        jButton3.setText("Eliminar");
+        btnElim.setText("Eliminar");
+        btnElim.setEnabled(false);
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        boxUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "item1" }));
+
+        jLabel22.setText("Tipo");
+
+        busquedaBoxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODOS", "EGRESO PARTICULAR", "EGRESO PROVEEDOR", "INGRESO" }));
+
+        jLabel23.setFont(new java.awt.Font("Droid Sans", 1, 18)); // NOI18N
+        jLabel23.setText("Total    $");
+
+        lblTotal.setFont(new java.awt.Font("Droid Sans", 1, 18)); // NOI18N
+        lblTotal.setText("0.00");
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);
@@ -100,82 +252,112 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel15)
-                        .addComponent(jTextField5)
-                        .addComponent(jLabel16)
-                        .addComponent(jComboBox3, 0, 221, Short.MAX_VALUE))
-                    .addGroup(panelImage1Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel18))
-                    .addGroup(panelImage1Layout.createSequentialGroup()
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(calendarioTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel19)
-                    .addGroup(panelImage1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage1Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
+                    .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(panelImage1Layout.createSequentialGroup()
+                            .addComponent(jLabel17)
+                            .addGap(115, 115, 115)
+                            .addComponent(jLabel18))
+                        .addGroup(panelImage1Layout.createSequentialGroup()
+                            .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(32, 32, 32)
+                            .addComponent(txtCalendario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel19)
+                        .addGroup(panelImage1Layout.createSequentialGroup()
+                            .addComponent(btnNuevoGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnModif, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnElim, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane6))
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16)
+                    .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(boxUsuario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(boxTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, 221, Short.MAX_VALUE)))
+                .addGap(12, 12, 12)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelImage1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane5)
+                            .addGroup(panelImage1Layout.createSequentialGroup()
+                                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelImage1Layout.createSequentialGroup()
+                                        .addComponent(jLabel22)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(busquedaBoxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(txtDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel21)
+                                    .addComponent(txtHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))))
+                        .addContainerGap())
+                    .addGroup(panelImage1Layout.createSequentialGroup()
+                        .addGap(184, 184, 184)
+                        .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calendarioTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calendarioTxt2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(lblTotal)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelImage1Layout.setVerticalGroup(
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelImage1Layout.createSequentialGroup()
+                    .addGroup(panelImage1Layout.createSequentialGroup()
                         .addComponent(jLabel15)
+                        .addGap(12, 12, 12)
+                        .addComponent(boxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(boxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel17)
                             .addComponent(jLabel18))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(calendarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnModif, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnElim, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnNuevoGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panelImage1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(calendarioTxt1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(calendarioTxt2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(6, 6, 6)
+                        .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelImage1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jSeparator1))
+                            .addGroup(panelImage1Layout.createSequentialGroup()
+                                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel21)
+                                    .addComponent(jLabel22))
+                                .addGap(9, 9, 9)
+                                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(busquedaBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel23)
+                                    .addComponent(lblTotal))
+                                .addGap(14, 14, 14)))))
                 .addGap(24, 24, 24))
         );
 
@@ -195,27 +377,26 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox boxTipo;
+    private javax.swing.JComboBox boxUsuario;
+    private javax.swing.JButton btnElim;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnEliminar1;
+    private javax.swing.JButton btnModif;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnModificar1;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnNuevo1;
+    private javax.swing.JButton btnNuevoGuardar;
+    private javax.swing.JComboBox busquedaBoxTipo;
     private com.toedter.calendar.JDateChooser calendarDesde;
     private com.toedter.calendar.JDateChooser calendarDesde1;
     private com.toedter.calendar.JDateChooser calendarDesde2;
     private com.toedter.calendar.JDateChooser calendarDesde3;
     private com.toedter.calendar.JDateChooser calendarHasta;
     private com.toedter.calendar.JDateChooser calendarHasta1;
-    private com.toedter.calendar.JDateChooser calendarioTxt;
-    private com.toedter.calendar.JDateChooser calendarioTxt1;
-    private com.toedter.calendar.JDateChooser calendarioTxt2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -230,6 +411,8 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -243,20 +426,24 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JLabel lblTotal;
     private org.edisoncor.gui.panel.PanelImage panelImage1;
     private org.edisoncor.gui.panel.PanelImage panelImage2;
     private org.edisoncor.gui.panel.PanelImage panelImage3;
+    private javax.swing.JTable tablaMovimientos;
+    private com.toedter.calendar.JDateChooser txtCalendario;
+    private javax.swing.JTextArea txtDescripcion;
+    private com.toedter.calendar.JDateChooser txtDesde;
+    private com.toedter.calendar.JDateChooser txtHasta;
+    private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 }
