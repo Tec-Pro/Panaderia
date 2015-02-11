@@ -8,6 +8,7 @@ PRIMARY KEY(id));
 
 CREATE TABLE ventas(id INT,
 monto FLOAT,
+fecha DATE,
 PRIMARY KEY(id));
 
 CREATE TABLE articulos_ventas(id INT AUTO_INCREMENT,
@@ -21,15 +22,10 @@ CREATE TABLE movimientos(id INT AUTO_INCREMENT,
 descripcion VARCHAR(120),
 tipo VARCHAR(20),
 monto FLOAT,
+fecha DATE,
 usuario_id INT,
 PRIMARY KEY(id));
 
-CREATE TABLE usuarios(id INT AUTO_INCREMENT,
-username VARCHAR(20),
-nyap VARCHAR(50),
-pass VARCHAR(20),
-PRIMARY KEY(id));
-
-CREATE TABLE empleados(id INT AUTO_INCREMENT,
+CREATE TABLE persona(id INT AUTO_INCREMENT,
 nyap VARCHAR(50),
 PRIMARY KEY(id));
