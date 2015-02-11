@@ -6,6 +6,7 @@
 package ABMs;
 
 import Modelos.Movimiento;
+import java.util.List;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 
@@ -16,7 +17,9 @@ import org.javalite.activejdbc.LazyList;
 public class GestionMovimientos {
     
     public Movimiento getMovimiento(String id){
+        abrirBase();
         Movimiento m = Movimiento.first("id = ?", id);
+        Base.close();
         return m;
     }
     
@@ -38,6 +41,43 @@ public class GestionMovimientos {
         Base.commitTransaction();
         Base.close();
         return false;
+    }
+    
+    public boolean Modificar(Movimiento m){
+        abrirBase();
+        Base.openTransaction();
+        if(m.saveIt()){
+            Base.commitTransaction();
+            Base.close();
+            return true;
+        }
+        Base.commitTransaction();
+        Base.close();
+        return false;
+    }
+    
+    public boolean Eliminar(Movimiento m){
+        abrirBase();
+        Base.openTransaction();
+        if(m.delete()){
+            Base.commitTransaction();
+            Base.close();
+            return true;
+        }
+        Base.commitTransaction();
+        Base.close();
+        return false;
+    }
+    
+    public List<Movimiento> buscarMovimientos(String tipo, String desde, String hasta) {
+        abrirBase();
+        List<Movimiento> result;
+        if(tipo.equals("TODOS"))
+            result = Movimiento.where("fecha between ? and ?", desde, hasta);
+        else
+            result = Movimiento.where("tipo like ? and (fecha between ? and ?)", tipo, desde, hasta);
+        Base.close();
+        return result;
     }
     
     public void abrirBase() {

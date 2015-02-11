@@ -7,7 +7,10 @@ package Interfaces;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 public class MovimientosGUI extends javax.swing.JInternalFrame {
 
     DefaultTableModel tablaMovimientosDefault;
-    
+
     public MovimientosGUI() {
         initComponents();
         boxTipo.setEnabled(false);
@@ -33,17 +36,42 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
         txtMonto.setEditable(false);
         txtCalendario.setDate(Calendar.getInstance().getTime());
         tablaMovimientosDefault = (DefaultTableModel) tablaMovimientos.getModel();
+
+       
+        txtDesde.setToolTipText("Ver movimientos desde la fecha");
+        txtDesde.setDateFormatString("dd/MM/yyyy");
+        txtHasta.setToolTipText("Ver movimientos hasta la fecha");
+        txtHasta.setDateFormatString("dd/MM/yyyy");
+        txtCalendario.setDateFormatString("dd/MM/yyyy");
+        txtDesde.getDateEditor().setEnabled(false);
+        txtHasta.getDateEditor().setEnabled(false);
+        txtHasta.setDate(Calendar.getInstance().getTime());
+
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+        String strFecha = "01/01/2015";
+        Date fecha = null;
+        try {
+
+            fecha = formatoDelTexto.parse(strFecha);
+
+        } catch (ParseException ex) {
+
+            ex.printStackTrace();
+
+        }
+        txtDesde.setDate(fecha);
+
     }
 
-    public void LimpiarVentana(){
+    public void LimpiarVentana() {
         boxTipo.setSelectedIndex(0);
         boxUsuario.setSelectedIndex(0);
         txtCalendario.setDate(Calendar.getInstance().getTime());
         txtDescripcion.setText("");
         txtMonto.setText("");
     }
-    
-    public void ApreteBotonNuevoModificar(){
+
+    public void ApreteBotonNuevoModificar() {
         boxTipo.setEnabled(true);
         boxUsuario.setEnabled(true);
         txtCalendario.setEnabled(true);
@@ -54,8 +82,8 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
         btnElim.setText("Cancelar");
         btnElim.setEnabled(true);
     }
-    
-    public void ApreteBotonGuardarEliminarCancelar(){
+
+    public void ApreteBotonGuardarEliminarCancelar() {
         LimpiarVentana();
         boxTipo.setEnabled(false);
         boxUsuario.setEnabled(false);
@@ -67,8 +95,8 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
         btnElim.setText("Eliminar");
         btnElim.setEnabled(false);
     }
-    
-    public void SeleccioneElementoDeLaTabla(){
+
+    public void SeleccioneElementoDeLaTabla() {
         boxTipo.setEnabled(false);
         boxUsuario.setEnabled(false);
         txtCalendario.setEnabled(false);
@@ -79,8 +107,8 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
         btnElim.setText("Eliminar");
         btnElim.setEnabled(true);
     }
-    
-    public void setActionListener(ActionListener ac){
+
+    public void setActionListener(ActionListener ac) {
         btnNuevoGuardar.addActionListener(ac);
         btnModif.addActionListener(ac);
         btnElim.addActionListener(ac);
@@ -141,8 +169,7 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
     public JTextField getTxtMonto() {
         return txtMonto;
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

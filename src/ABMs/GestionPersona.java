@@ -37,8 +37,9 @@ public class GestionPersona {
     public String getNombrePersona(String id){
         abrirBase();
         Persona p = Persona.first("id = ?", id);
+        String n = p.getString("nyap");
         Base.close();
-        return p.getString("nyap");
+        return n;
     }
     
     public void abrirBase() {
