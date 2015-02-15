@@ -6,6 +6,7 @@
 package Controladores;
 
 import Interfaces.AplicacionGUI;
+import Interfaces.CargarVentasGUI;
 import Interfaces.MovimientosGUI;
 import Modelos.Movimiento;
 import Modelos.Persona;
@@ -26,6 +27,7 @@ public class ControladorPrincipal implements ActionListener{
     
     AplicacionGUI aplicacionGUI;
     MovimientosGUI movimientosGUI;
+    CargarVentasGUI cargarVentaGUI;
     
     public ControladorPrincipal(){
          try {
@@ -41,7 +43,10 @@ public class ControladorPrincipal implements ActionListener{
         movimientosGUI = new MovimientosGUI();
         ControladorMovimientos controladorMovimientos = new ControladorMovimientos(movimientosGUI);
         
+        cargarVentaGUI = new CargarVentasGUI();
+        
         aplicacionGUI.getEscritorio().add(movimientosGUI);
+        aplicacionGUI.getEscritorio().add(cargarVentaGUI);
         
         aplicacionGUI.setVisible(true);
     }
@@ -91,6 +96,9 @@ public class ControladorPrincipal implements ActionListener{
         if(e.getSource().equals(aplicacionGUI.getBtnMovimientos())){
             movimientosGUI.setVisible(true);
             ActualizarListaMovimientos();
+        }
+        if(e.getSource().equals(aplicacionGUI.getBtnCargarVenta())){
+            cargarVentaGUI.setVisible(true);
         }
     }
 }
