@@ -11,6 +11,6 @@ import org.javalite.activejdbc.Model;
  *
  * @author alan
  */
-public class Articulo extends Model{
+public class ArticulosVentas extends Model{
     
 }

@@ -30,6 +30,10 @@ public class AplicacionGUI extends javax.swing.JFrame {
         return Escritorio;
     }
 
+    public JButton getBtnVentas() {
+        return btnVentas;
+    }
+
     public JButton getBtnCargarVenta() {
         return btnCargarVenta;
     }
@@ -37,6 +41,7 @@ public class AplicacionGUI extends javax.swing.JFrame {
     public void setActionListener(ActionListener ac){
         btnMovimientos.addActionListener(ac);
         btnCargarVenta.addActionListener(ac);
+        btnVentas.addActionListener(ac);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,7 +55,7 @@ public class AplicacionGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         btnCargarVenta = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnVentas = new javax.swing.JButton();
         btnMovimientos = new javax.swing.JButton();
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -65,7 +70,7 @@ public class AplicacionGUI extends javax.swing.JFrame {
 
         btnCargarVenta.setText("Cargar venta");
 
-        jButton3.setText("Ventas");
+        btnVentas.setText("Ventas");
 
         btnMovimientos.setText("Movimientos");
 
@@ -75,7 +80,7 @@ public class AplicacionGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnCargarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -85,7 +90,7 @@ public class AplicacionGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCargarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMovimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 104, Short.MAX_VALUE))
@@ -123,8 +128,8 @@ public class AplicacionGUI extends javax.swing.JFrame {
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JButton btnCargarVenta;
     private javax.swing.JButton btnMovimientos;
+    private javax.swing.JButton btnVentas;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

@@ -67,7 +67,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jButton1" max="32767" attributes="0"/>
               <Component id="btnCargarVenta" alignment="0" max="32767" attributes="0"/>
-              <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
+              <Component id="btnVentas" alignment="0" max="32767" attributes="0"/>
               <Component id="btnMovimientos" alignment="0" pref="100" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
@@ -78,7 +78,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnCargarVenta" min="-2" pref="79" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" pref="77" max="-2" attributes="0"/>
+                  <Component id="btnVentas" min="-2" pref="77" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnMovimientos" min="-2" pref="83" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="104" max="32767" attributes="0"/>
@@ -97,7 +97,7 @@
             <Property name="text" type="java.lang.String" value="Cargar venta"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="btnVentas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ventas"/>
           </Properties>
