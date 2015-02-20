@@ -5,10 +5,12 @@
  */
 package Interfaces;
 
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,11 +18,12 @@ import javax.swing.JTextField;
  */
 public class CargarVentasGUI extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form CargarVentasGUI
-     */
+    private DefaultTableModel tablaVentaDefault;
+    
     public CargarVentasGUI() {
         initComponents();
+        
+        tablaVentaDefault = (DefaultTableModel) tablaVenta.getModel();
         
         tablaVenta.getColumnModel().getColumn(0).setPreferredWidth(50);
         tablaVenta.getColumnModel().getColumn(1).setPreferredWidth(400);
@@ -31,6 +34,10 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
 
     public JButton getBtnCancelar() {
         return btnCancelar;
+    }
+
+    public DefaultTableModel getTablaVentaDefault() {
+        return tablaVentaDefault;
     }
 
     public JButton getBtnRegVenta() {
@@ -49,6 +56,9 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
         return txtCodigo;
     }
 
+    public void setActionListener(ActionListener ac){
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +68,8 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuTabla = new javax.swing.JPopupMenu();
+        btnQuitar = new javax.swing.JMenuItem();
         panelImage1 = new org.edisoncor.gui.panel.PanelImage();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaVenta = new javax.swing.JTable();
@@ -69,6 +81,9 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
         txtCodigo = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+
+        btnQuitar.setText("Quitar articulo");
+        menuTabla.add(btnQuitar);
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -97,6 +112,7 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaVenta.setComponentPopupMenu(menuTabla);
         jScrollPane1.setViewportView(tablaVenta);
 
         jLabel1.setFont(new java.awt.Font("Droid Sans", 1, 36)); // NOI18N
@@ -156,7 +172,7 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelImage1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
@@ -193,6 +209,7 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JMenuItem btnQuitar;
     private javax.swing.JButton btnRegVenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -200,6 +217,7 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JPopupMenu menuTabla;
     private org.edisoncor.gui.panel.PanelImage panelImage1;
     private javax.swing.JTable tablaVenta;
     private javax.swing.JTextField txtCodigo;
