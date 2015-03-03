@@ -48,7 +48,7 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
                 busquedaKeyReleased(evt);
             }
         });
-        
+
         cargarVentaGUI.getTablaVenta().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -140,12 +140,12 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /* if (e.getSource().equals(cargarVentaGUI.getQuitarBtn())) {
-         if (cargarVentaGUI.getTablaVenta().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
-         cargarVentaGUI.getTablaVentaDefault().removeRow(cargarVentaGUI.getTablaVenta().getSelectedRow());
-         actualizarMonto();
-         }
-         }*/
+        if (e.getSource().equals(cargarVentaGUI.getBtnQuitar())) {
+            if (cargarVentaGUI.getTablaVenta().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
+                cargarVentaGUI.getTablaVentaDefault().removeRow(cargarVentaGUI.getTablaVenta().getSelectedRow());
+                actualizarMonto();
+            }
+        }
         if (e.getSource().equals(cargarVentaGUI.getBtnRegVenta())) {
             if (DatosOK()) {
                 if (gestionVentas.Alta(ObtenerDatosVenta())) {

@@ -8,6 +8,7 @@ package Interfaces;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -48,7 +49,9 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
         return txtTotal;
     }
 
-    
+    public JMenuItem getBtnQuitar() {
+        return btnQuitar;
+    }
 
     public JTable getTablaVenta() {
         return tablaVenta;
@@ -61,6 +64,7 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
     public void setActionListener(ActionListener ac){
         btnCancelar.addActionListener(ac);
         btnRegVenta.addActionListener(ac);
+        btnQuitar.addActionListener(ac);
     }
     /**
      * This method is called from within the constructor to initialize the form.
