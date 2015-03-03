@@ -60,7 +60,7 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
 
     private void busquedaKeyReleased(KeyEvent evt) {
         String codigo = cargarVentaGUI.getTxtCodigo().getText();
-        if (codigo.length() == 13) {
+        if (codigo.length() >= 13) {
             String id = codigo.substring(2, 7);//Selecciono solo el id del producto
             abrirBase();
             Articulo articulo = Articulo.first("id = ?", id);
