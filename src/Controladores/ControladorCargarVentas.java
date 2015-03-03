@@ -22,6 +22,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import panaderia.Triple;
@@ -44,6 +46,13 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
             @Override
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 busquedaKeyReleased(evt);
+            }
+        });
+        
+        cargarVentaGUI.getTablaVenta().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                cargarVentaGUI.getTxtCodigo().requestFocus();//pongo el cursor sobre el campo del codigo
             }
         });
 
@@ -156,6 +165,7 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
             cargarVentaGUI.getTxtCodigo().setText("");
             cargarVentaGUI.getTxtTotal().setText("");
         }
+        cargarVentaGUI.getTxtCodigo().requestFocus();//pongo el cursor sobre el campo del codigo
     }
 
     /*paraMostrar == true: retorna la fecha en formato dd/mm/yyyy (formato pantalla)
@@ -174,6 +184,7 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
     @Override
     public void editingStopped(ChangeEvent e) {
         actualizarMonto();
+        cargarVentaGUI.getTxtCodigo().requestFocus();//pongo el cursor sobre el campo del codigo
     }
 
     @Override

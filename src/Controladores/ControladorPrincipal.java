@@ -108,6 +108,7 @@ public class ControladorPrincipal implements ActionListener{
         }
         if(e.getSource().equals(aplicacionGUI.getBtnCargarVenta())){
             cargarVentaGUI.setVisible(true);
+            cargarVentaGUI.getTxtCodigo().requestFocus();
         }
         if(e.getSource().equals(aplicacionGUI.getBtnVentas())){
             ventasGUI.setVisible(true);
