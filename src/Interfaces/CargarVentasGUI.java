@@ -44,9 +44,11 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
         return btnRegVenta;
     }
 
-    public JLabel getLblTotal() {
-        return lblTotal;
+    public JTextField getTxtTotal() {
+        return txtTotal;
     }
+
+    
 
     public JTable getTablaVenta() {
         return tablaVenta;
@@ -57,7 +59,8 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
     }
 
     public void setActionListener(ActionListener ac){
-        
+        btnCancelar.addActionListener(ac);
+        btnRegVenta.addActionListener(ac);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,13 +77,13 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaVenta = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        lblTotal = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         btnRegVenta = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        txtTotal = new javax.swing.JTextField();
 
         btnQuitar.setText("Quitar articulo");
         menuTabla.add(btnQuitar);
@@ -95,18 +98,21 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
         tablaVenta.setFont(new java.awt.Font("Droid Sans", 0, 18)); // NOI18N
         tablaVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Producto", "Cantidad/Peso", "Precio unit/ por kilo", "Precio total"
-            }
+                "ID", "Producto", "Cantidad/Peso","Precio unit/ por kg", "Precio total" }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.math.BigDecimal.class, java.math.BigDecimal.class, java.math.BigDecimal.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -118,10 +124,6 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Droid Sans", 1, 36)); // NOI18N
         jLabel1.setText("Total   $");
 
-        lblTotal.setFont(new java.awt.Font("Droid Sans", 1, 36)); // NOI18N
-        lblTotal.setForeground(new java.awt.Color(27, 117, 20));
-        lblTotal.setText("0.00");
-
         btnCancelar.setText("Cancelar");
 
         btnRegVenta.setText("Registrar venta");
@@ -130,6 +132,10 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
         jLabel2.setText("Codigo");
 
         txtCodigo.setFont(new java.awt.Font("Droid Sans", 0, 18)); // NOI18N
+
+        txtTotal.setFont(new java.awt.Font("Droid Sans", 1, 36)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(40, 181, 49));
+        txtTotal.setText("0.00");
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);
@@ -158,8 +164,8 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
                         .addComponent(jSeparator1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2)))
                 .addContainerGap())
@@ -172,13 +178,13 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelImage1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(lblTotal))
+                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage1Layout.createSequentialGroup()
                         .addGap(61, 61, 61)
@@ -216,10 +222,10 @@ public class CargarVentasGUI extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lblTotal;
     private javax.swing.JPopupMenu menuTabla;
     private org.edisoncor.gui.panel.PanelImage panelImage1;
     private javax.swing.JTable tablaVenta;
     private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

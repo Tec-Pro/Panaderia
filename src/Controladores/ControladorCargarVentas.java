@@ -40,11 +40,46 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
         cargarVentaGUI.setActionListener(this);
         gestionVentas = new GestionVentas();
 
+        cargarVentaGUI.getTxtCodigo().addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                busquedaKeyReleased(evt);
+            }
+        });
+
+    }
+
+    private void busquedaKeyReleased(KeyEvent evt) {
+        String codigo = cargarVentaGUI.getTxtCodigo().getText();
+        if (codigo.length() == 13) {
+            String id = codigo.substring(2, 7);//Selecciono solo el id del producto
+            abrirBase();
+            Articulo articulo = Articulo.first("id = ?", id);
+            if (articulo != null) {
+                Object row[] = new Object[6];
+                row[0] = articulo.getString("id");
+                row[1] = articulo.getString("nombre");
+                if (articulo.getString("tipo").equals("pesable")) {
+                    BigDecimal a = new BigDecimal(codigo.substring(7, 9) + "." + codigo.substring(9, 12));
+                    row[2] = a;
+                } else {
+                    row[2] = BigDecimal.valueOf(1.00);
+                }
+                row[3] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
+                row[4] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
+                cargarVentaGUI.getTablaVentaDefault().addRow(row);
+                setCellEditor();
+                actualizarMonto();
+            } else {
+                JOptionPane.showMessageDialog(cargarVentaGUI, "Producto no encontrado!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            cargarVentaGUI.getTxtCodigo().setText("");//limpio el campo de id
+            Base.close();
+        }
     }
 
     public Venta ObtenerDatosVenta() {
         abrirBase();
-        BigDecimal cero = new BigDecimal(0);
         LinkedList<Triple> listaArticulos = new LinkedList();
         for (int i = 0; i < cargarVentaGUI.getTablaVentaDefault().getRowCount(); i++) {
             Object idArticulo = cargarVentaGUI.getTablaVentaDefault().getValueAt(i, 0);
@@ -54,13 +89,11 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
             BigDecimal precioFinal = BigDecimal.valueOf(doublePrecioFinal);
             listaArticulos.add(new Triple(idArticulo, cantidad, precioFinal));
         }
-            Venta v = new Venta(listaArticulos);
-            v.set("fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false));
-            v.setBigDecimal("monto", cargarVentaGUI.getLblTotal().getText());
-            return v;
-        }
-
-    
+        Venta v = new Venta(listaArticulos);
+        v.set("fecha", dateToMySQLDate(Calendar.getInstance().getTime(), false));
+        v.setBigDecimal("monto", cargarVentaGUI.getTxtTotal().getText());
+        return v;
+    }
 
     public boolean DatosOK() {
         if (cargarVentaGUI.getTablaVenta().getRowCount() == 0) {
@@ -78,7 +111,8 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
             cargarVentaGUI.getTablaVentaDefault().setValueAt(importe, i, 4);
             total = total.add((BigDecimal) cargarVentaGUI.getTablaVentaDefault().getValueAt(i, 4)).setScale(2, RoundingMode.CEILING);
         }
-        cargarVentaGUI.getLblTotal().setText(total.setScale(2, RoundingMode.CEILING).toString());
+        cargarVentaGUI.getTxtTotal().setText("");
+        cargarVentaGUI.getTxtTotal().setText(total.setScale(2, RoundingMode.CEILING).toString());
 
     }
 
@@ -95,19 +129,21 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
         }
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
-       /* if (e.getSource().equals(cargarVentaGUI.getQuitarBtn())) {
-            if (cargarVentaGUI.getTablaVenta().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
-                cargarVentaGUI.getTablaVentaDefault().removeRow(cargarVentaGUI.getTablaVenta().getSelectedRow());
-                actualizarMonto();
-            }
-        }*/
+        /* if (e.getSource().equals(cargarVentaGUI.getQuitarBtn())) {
+         if (cargarVentaGUI.getTablaVenta().getSelectedRow() != -1) {//-1 retorna getSelectedRow si no hay fila seleccionada
+         cargarVentaGUI.getTablaVentaDefault().removeRow(cargarVentaGUI.getTablaVenta().getSelectedRow());
+         actualizarMonto();
+         }
+         }*/
         if (e.getSource().equals(cargarVentaGUI.getBtnRegVenta())) {
             if (DatosOK()) {
                 if (gestionVentas.Alta(ObtenerDatosVenta())) {
                     JOptionPane.showMessageDialog(cargarVentaGUI, "Venta registrada exitosamente!");
+                    cargarVentaGUI.getTablaVentaDefault().setRowCount(0);
+                    cargarVentaGUI.getTxtCodigo().setText("");
+                    cargarVentaGUI.getTxtTotal().setText("");
                 } else {
                     JOptionPane.showMessageDialog(cargarVentaGUI, "Ocurrio un error, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -115,7 +151,11 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
                 JOptionPane.showMessageDialog(cargarVentaGUI, "La lista de productos esta vacia.", "Atencion!", JOptionPane.WARNING_MESSAGE);
             }
         }
-        
+        if (e.getSource().equals(cargarVentaGUI.getBtnCancelar())) {
+            cargarVentaGUI.getTablaVentaDefault().setRowCount(0);
+            cargarVentaGUI.getTxtCodigo().setText("");
+            cargarVentaGUI.getTxtTotal().setText("");
+        }
     }
 
     /*paraMostrar == true: retorna la fecha en formato dd/mm/yyyy (formato pantalla)
@@ -137,5 +177,6 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
     }
 
     @Override
-    public void editingCanceled(ChangeEvent e) {}
+    public void editingCanceled(ChangeEvent e) {
+    }
 }

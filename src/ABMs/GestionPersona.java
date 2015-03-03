@@ -15,33 +15,35 @@ import org.javalite.activejdbc.LazyList;
  * @author alan
  */
 public class GestionPersona {
-    
-    public LinkedList<String> getNombrePersonas(){
+
+    public LinkedList<String> getNombrePersonas() {
         abrirBase();
         LazyList<Persona> lista = Persona.findAll();
         LinkedList<String> personas = new LinkedList<>();
-        for(Persona p: lista){
-            personas.add(p.getString("nyap"));
+        if (!lista.isEmpty()) {
+            for (Persona p : lista) {
+                personas.add(p.getString("nyap"));
+            }
         }
         Base.close();
         return personas;
     }
-    
-    public String getIdPersona(String nombre){
+
+    public String getIdPersona(String nombre) {
         abrirBase();
         Persona p = Persona.first("nyap = ?", nombre);
         Base.close();
         return p.getString("id");
     }
-    
-    public String getNombrePersona(String id){
+
+    public String getNombrePersona(String id) {
         abrirBase();
         Persona p = Persona.first("id = ?", id);
         String n = p.getString("nyap");
         Base.close();
         return n;
     }
-    
+
     public void abrirBase() {
         if (!Base.hasConnection()) {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/panaderia", "root", "root");
