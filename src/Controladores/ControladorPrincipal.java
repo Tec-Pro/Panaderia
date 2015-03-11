@@ -31,6 +31,7 @@ public class ControladorPrincipal implements ActionListener{
     MovimientosGUI movimientosGUI;
     CargarVentasGUI cargarVentaGUI;
     VentasGUI ventasGUI;
+    private final ArticulosGUI articulosGUI;
     
     
     public ControladorPrincipal(){
@@ -53,9 +54,13 @@ public class ControladorPrincipal implements ActionListener{
         ventasGUI = new VentasGUI();
         ControladorVentas controladorVentas = new ControladorVentas(ventasGUI);
         
+        articulosGUI = new ArticulosGUI();
+        ControladorArticulos controladorArticulos = new ControladorArticulos(articulosGUI);
+        
         aplicacionGUI.getEscritorio().add(movimientosGUI);
         aplicacionGUI.getEscritorio().add(cargarVentaGUI);
         aplicacionGUI.getEscritorio().add(ventasGUI);
+        aplicacionGUI.getEscritorio().add(articulosGUI);
         
         aplicacionGUI.setVisible(true);
     }
@@ -112,6 +117,9 @@ public class ControladorPrincipal implements ActionListener{
         }
         if(e.getSource().equals(aplicacionGUI.getBtnVentas())){
             ventasGUI.setVisible(true);
+        } 
+        if(e.getSource().equals(aplicacionGUI.getBtnArticulos())){
+            articulosGUI.setVisible(true);
         }
     }
 }
