@@ -48,14 +48,10 @@ private int idVenta;
     public boolean Modificar(Venta v){
         abrirBase();
         Base.openTransaction();
-        if(v.saveIt()){
-            Base.commitTransaction();
-            Base.close();
-            return true;
-        }
+        boolean res = v.saveIt();
         Base.commitTransaction();
         Base.close();
-        return false;
+        return res;
     }
     
     public boolean Eliminar(Venta v){
@@ -87,10 +83,24 @@ private int idVenta;
         return result;
     }
     
+    public LazyList<Venta> listarVentas(){
+        abrirBase();
+        LazyList<Venta> res = Venta.findAll();
+        Base.close();
+        return res;
+    }
+    
+    public LazyList<ArticulosVentas> listarArticulosVenta(String venta_id){
+        abrirBase();
+        LazyList<ArticulosVentas> res = ArticulosVentas.where("venta_id = ?", venta_id);
+        Base.close();
+        return res;
+    }
     
     public void abrirBase() {
         if (!Base.hasConnection()) {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/panaderia", "root", "root");
         }
     }
+
 }

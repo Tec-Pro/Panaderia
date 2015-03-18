@@ -36,10 +36,12 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
 
     CargarVentasGUI cargarVentaGUI;
     GestionVentas gestionVentas;
+    private final ControladorVentas controladorVentas;
 
-    public ControladorCargarVentas(CargarVentasGUI cv) {
+    public ControladorCargarVentas(CargarVentasGUI cv, ControladorVentas controlador) {
         cargarVentaGUI = cv;
         cargarVentaGUI.setActionListener(this);
+        controladorVentas = controlador;
         gestionVentas = new GestionVentas();
 
         cargarVentaGUI.getTxtCodigo().addKeyListener(new java.awt.event.KeyAdapter() {
@@ -63,10 +65,11 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
         if (codigo.length() >= 13) {
             String id = codigo.substring(2, 7);//Selecciono solo el id del producto
             abrirBase();
-            Articulo articulo = Articulo.first("id = ?", id);
+            System.out.println(id);
+            Articulo articulo = Articulo.first("codigo = ?", id);
             if (articulo != null) {
                 Object row[] = new Object[6];
-                row[0] = articulo.getString("id");
+                row[0] = articulo.getString("codigo");
                 row[1] = articulo.getString("nombre");
                 if (articulo.getString("tipo").equals("pesable")) {
                     BigDecimal a = new BigDecimal(codigo.substring(7, 9) + "." + codigo.substring(9, 12));
@@ -153,6 +156,7 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
                     cargarVentaGUI.getTablaVentaDefault().setRowCount(0);
                     cargarVentaGUI.getTxtCodigo().setText("");
                     cargarVentaGUI.getTxtTotal().setText("");
+                    controladorVentas.cargarListaVentas();
                 } else {
                     JOptionPane.showMessageDialog(cargarVentaGUI, "Ocurrio un error, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
                 }

@@ -25,6 +25,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         inhabilitarCampos();
+        tablaArticulosDefault = (DefaultTableModel) tablaArticulos.getModel();
     }
 
     public void limpiarPantalla(){
@@ -36,28 +37,38 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
     }
     
     public void habilitarGuardarCancelar(){
-        boxTipo.setEnabled(true);
-        txtNombre.setEnabled(true);
-        txtCodigo.setEnabled(true);
-        txtDescripcion.setEnabled(true);
-        txtPrecio.setEnabled(true);
+        habilitarCampos();
         btnEliminar.setEnabled(true);
-        //btnNuevo.setText("Guardar");
+        btnModificar.setEnabled(false);
+        btnNuevo.setText("Guardar");
         btnEliminar.setText("Cancelar");
     }
     
     public void habilitarNuevo(){
         limpiarPantalla();
         btnNuevo.setText("Nuevo");
+        btnModificar.setEnabled(false);
         btnEliminar.setText("Eliminar");
         btnEliminar.setEnabled(false);
         inhabilitarCampos();
     }
     
-    public void inhabilitarCampos(){
+    public void habilitarCampos(){
+        boxTipo.setEnabled(true);
+        txtNombre.setEnabled(true);
+        txtNombre.setEditable(true);
+        txtCodigo.setEnabled(true);
+        txtDescripcion.setEnabled(true);
+        txtDescripcion.setEditable(true);
+        txtPrecio.setEnabled(true);
+    }
+    
+    private void inhabilitarCampos(){
         boxTipo.setEnabled(false);
+        txtNombre.setEditable(false);
         txtNombre.setEnabled(false);
         txtCodigo.setEnabled(false);
+        txtDescripcion.setEditable(false);
         txtDescripcion.setEnabled(false);
         txtPrecio.setEnabled(false);
     }
@@ -66,6 +77,21 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         btnNuevo.addActionListener(ac);
         btnModificar.addActionListener(ac);
         btnEliminar.addActionListener(ac);
+    }
+    
+    public void seleccionTabla(){
+        btnModificar.setEnabled(true);
+        btnNuevo.setText("Nuevo");
+        btnEliminar.setEnabled(true);
+        btnEliminar.setText("Eliminar");
+        boxTipo.setEnabled(false);
+        txtCodigo.setEnabled(false);
+        txtNombre.setEnabled(true);
+        txtNombre.setEditable(false);
+        txtPrecio.setEnabled(true);
+        txtPrecio.setEnabled(false);
+        txtDescripcion.setEnabled(true);
+        txtDescripcion.setEditable(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,7 +109,6 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         txtBuscador = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
         boxTipo = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
@@ -95,11 +120,14 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        txtPrecio = new javax.swing.JFormattedTextField();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Articulos");
+        setTitle("Gestion de Articulos");
 
         tablaArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,7 +138,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -122,7 +150,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Cantarell", 0, 15)); // NOI18N
         jLabel1.setText("Buscar:");
 
-        boxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pesable", "Unitario" }));
+        boxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "PESABLE", "UNITARIO" }));
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
@@ -149,6 +177,8 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
 
         btnEliminar.setText("Eliminar");
 
+        txtPrecio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);
         panelImage1Layout.setHorizontalGroup(
@@ -172,9 +202,9 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtCodigo)
                     .addComponent(txtNombre)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(boxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addComponent(txtPrecio))
                 .addGap(18, 18, 18)
                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelImage1Layout.createSequentialGroup()
@@ -205,8 +235,8 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel4)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(boxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,7 +245,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnNuevo)
                             .addComponent(btnModificar)
@@ -257,7 +287,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JFormattedTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -330,7 +360,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
         return txtPrecio;
     }
 
-    public javax.swing.table.DefaultTableModel getDefaultTablaArticulos(){
+    public DefaultTableModel getDefaultTablaArticulos(){
         return tablaArticulosDefault;
     }
 }

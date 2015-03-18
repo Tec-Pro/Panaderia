@@ -6,6 +6,7 @@ CREATE TABLE articulos(id INT,
 nombre VARCHAR(45), 
 tipo VARCHAR(15), 
 precio FLOAT DEFAULT 0,
+descripcion VARCHAR (45),
 PRIMARY KEY(id));
 
 CREATE TABLE ventas(id INT AUTO_INCREMENT,

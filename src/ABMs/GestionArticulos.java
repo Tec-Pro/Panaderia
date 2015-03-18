@@ -22,7 +22,8 @@ public class GestionArticulos {
     public boolean Alta(Articulo a){
        abrirBase();
        Base.openTransaction();
-       boolean res = a.saveIt();
+       Articulo nuevo = Articulo.create("codigo",a.get("codigo"),"nombre",a.get("nombre"),"tipo",a.get("tipo"),"precio",a.get("precio"),"descripcion",a.get("descripcion"));
+       boolean res = nuevo.saveIt();
        Base.commitTransaction();
        Base.close();
        return res;
@@ -40,7 +41,7 @@ public class GestionArticulos {
     public boolean Borrar(Articulo a){
         abrirBase();
         Base.openTransaction();
-        Articulo aux = Articulo.findById(a.getId());
+        Articulo aux = Articulo.first("codigo = ?", a.getString("codigo"));
         boolean res = aux.delete();
         Base.commitTransaction();
         Base.close();
@@ -48,13 +49,16 @@ public class GestionArticulos {
     }
     
     public LazyList<Articulo> listarArticulos(){
-        return Articulo.findAll();
+        abrirBase();
+        LazyList<Articulo> res = Articulo.findAll();
+        Base.close();
+        return res;
     }
     
-    public LazyList<Articulo> buscarArticulo(String nombre, String tipo, String cod){
+    public LazyList<Articulo> buscarArticulo(String texto){
         abrirBase();
         LazyList<Articulo> res;
-        res = Articulo.where("nombre like ? and tipo like ? and cod like ?", "%"+nombre+"%", "%"+tipo+"%","%"+cod+"%");
+        res = Articulo.where("nombre like ? or tipo like ? or codigo like ?", "%"+texto+"%", "%"+texto+"%","%"+texto+"%");
         Base.close();
         return res;
     }
@@ -65,9 +69,9 @@ public class GestionArticulos {
         }
     }
 
-    public Articulo getArticulo(String valueOf) {
+    public Articulo getArticulo(String codigo) {
         abrirBase();
-        Articulo res = Articulo.findById(valueOf);
+        Articulo res = Articulo.first("codigo = ?", codigo);
         return res;
     }
 }
