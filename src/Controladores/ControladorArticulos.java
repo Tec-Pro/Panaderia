@@ -80,6 +80,7 @@ public class ControladorArticulos implements ActionListener {
                 case "Nuevo":
                     articulosGui.limpiarPantalla();
                     articulosGui.habilitarGuardarCancelar();
+                    articulosGui.getTxtCodigo().requestFocus();
                     break;
                 //Doy de alta o modifico según sea el caso.
                 case "Guardar":

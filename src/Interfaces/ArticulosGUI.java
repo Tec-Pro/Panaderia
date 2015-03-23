@@ -145,6 +145,7 @@ public class ArticulosGUI extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaArticulos.setFocusable(false);
         jScrollPane1.setViewportView(tablaArticulos);
 
         jLabel1.setFont(new java.awt.Font("Cantarell", 0, 15)); // NOI18N

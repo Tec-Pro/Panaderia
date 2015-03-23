@@ -71,7 +71,7 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
                 Object row[] = new Object[6];
                 row[0] = articulo.getString("codigo");
                 row[1] = articulo.getString("nombre");
-                if (articulo.getString("tipo").equals("pesable")) {
+                if (articulo.getString("tipo").equals("PESABLE")) {
                     BigDecimal a = new BigDecimal(codigo.substring(7, 9) + "." + codigo.substring(9, 12));
                     row[2] = a;
                 } else {
