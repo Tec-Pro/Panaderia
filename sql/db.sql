@@ -3,6 +3,7 @@ CREATE DATABASE panaderia;
 use panaderia;
 
 CREATE TABLE articulos(id INT,
+codigo INT,
 nombre VARCHAR(45), 
 tipo VARCHAR(15), 
 precio FLOAT DEFAULT 0,
