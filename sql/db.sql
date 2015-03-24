@@ -2,7 +2,7 @@ CREATE DATABASE panaderia;
 
 use panaderia;
 
-CREATE TABLE articulos(id INT,
+CREATE TABLE articulos(id INT auto_increment,
 codigo INT,
 nombre VARCHAR(45), 
 tipo VARCHAR(15), 

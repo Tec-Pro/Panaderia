@@ -44,7 +44,7 @@ public class GestionPersona {
         return n;
     }
 
-    public void abrirBase() {
+    private void abrirBase() {
         if (!Base.hasConnection()) {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/panaderia", "root", "root");
         }

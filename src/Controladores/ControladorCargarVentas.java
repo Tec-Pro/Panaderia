@@ -60,33 +60,60 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
 
     }
 
+    private int articuloYaCargado(Integer id) {
+        for (int i = 0; i < cargarVentaGUI.getTablaVenta().getRowCount(); i++) {
+            if (Integer.valueOf((String) cargarVentaGUI.getTablaVentaDefault().getValueAt(i, 0)).equals(id)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private void busquedaKeyReleased(KeyEvent evt) {
         String codigo = cargarVentaGUI.getTxtCodigo().getText();
         if (codigo.length() >= 13) {
-            String id = codigo.substring(2, 7);//Selecciono solo el id del producto
+            Integer id = Integer.valueOf(codigo.substring(2, 7));//Selecciono solo el id del producto
+            int lineaArticulo = articuloYaCargado(id);
             abrirBase();
-            System.out.println(id);
             Articulo articulo = Articulo.first("codigo = ?", id);
             if (articulo != null) {
-                Object row[] = new Object[6];
-                row[0] = articulo.getString("codigo");
-                row[1] = articulo.getString("nombre");
-                if (articulo.getString("tipo").equals("PESABLE")) {
-                    BigDecimal a = new BigDecimal(codigo.substring(7, 9) + "." + codigo.substring(9, 12));
-                    row[2] = a;
+                if (lineaArticulo == -1) {
+                    Object row[] = new Object[6];
+                    row[0] = articulo.getString("codigo");
+                    row[1] = articulo.getString("nombre");
+                    if (articulo.getString("tipo").equals("PESABLE")) {
+                        BigDecimal a = new BigDecimal(codigo.substring(7, 9) + "." + codigo.substring(9, 12));
+                        row[2] = a;
+                    } else {
+                        row[2] = BigDecimal.valueOf(1.00);
+                    }
+                    row[3] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
+                    row[4] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
+                    cargarVentaGUI.getTablaVentaDefault().addRow(row);
                 } else {
-                    row[2] = BigDecimal.valueOf(1.00);
+                    // Lo que se hace dentro de este else es sumar en uno o en el peso que sea a la cantidad del articulo si ya estaba en el carrito.
+                    if (articulo.getString("tipo").equals("PESABLE")) {
+                        Double viejaCantidad = new Double(String.valueOf(cargarVentaGUI.getTablaVentaDefault().getValueAt(lineaArticulo, 2)));
+                        BigDecimal viejaCantidadBD = BigDecimal.valueOf(viejaCantidad);
+                        BigDecimal uno = new BigDecimal(codigo.substring(7, 9) + "." + codigo.substring(9, 12));
+                        BigDecimal nuevaCantidad = viejaCantidadBD.add(uno);
+                        cargarVentaGUI.getTablaVentaDefault().setValueAt(nuevaCantidad, lineaArticulo, 2);
+                    } else {
+                        Double viejaCantidad = new Double(String.valueOf(cargarVentaGUI.getTablaVentaDefault().getValueAt(lineaArticulo, 2)));
+                        BigDecimal viejaCantidadBD = BigDecimal.valueOf(viejaCantidad);
+                        BigDecimal uno = new BigDecimal(1);
+                        BigDecimal nuevaCantidad = viejaCantidadBD.add(uno);
+                        cargarVentaGUI.getTablaVentaDefault().setValueAt(nuevaCantidad, lineaArticulo, 2);
+                    }
                 }
-                row[3] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
-                row[4] = articulo.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString();
-                cargarVentaGUI.getTablaVentaDefault().addRow(row);
-                setCellEditor();
-                actualizarMonto();
             } else {
                 JOptionPane.showMessageDialog(cargarVentaGUI, "Producto no encontrado!", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-            cargarVentaGUI.getTxtCodigo().setText("");//limpio el campo de id
             Base.close();
+
+            cargarVentaGUI.getTxtCodigo().setText("");//limpio el campo de id
+            setCellEditor();
+            actualizarMonto();
         }
     }
 
