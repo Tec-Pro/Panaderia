@@ -112,6 +112,7 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
         btnNuevoGuardar.addActionListener(ac);
         btnModif.addActionListener(ac);
         btnElim.addActionListener(ac);
+        btnAgregarPersona.addActionListener(ac);
     }
 
     public JComboBox getBoxTipo() {
@@ -128,6 +129,10 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
 
     public JComboBox getBoxUsuario() {
         return boxUsuario;
+    }
+
+    public JButton getBtnAgregarPersona() {
+        return btnAgregarPersona;
     }
 
     public JButton getBtnElim() {
@@ -205,6 +210,7 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
         busquedaBoxTipo = new javax.swing.JComboBox();
         jLabel23 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
+        btnAgregarPersona = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -271,13 +277,15 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
         lblTotal.setFont(new java.awt.Font("Droid Sans", 1, 18)); // NOI18N
         lblTotal.setText("0.00");
 
+        btnAgregarPersona.setText("+");
+
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);
         panelImage1Layout.setHorizontalGroup(
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(panelImage1Layout.createSequentialGroup()
                             .addComponent(jLabel17)
@@ -297,10 +305,14 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane6))
                     .addComponent(jLabel15)
                     .addComponent(jLabel16)
-                    .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(boxUsuario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(boxTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, 221, Short.MAX_VALUE)))
-                .addGap(12, 12, 12)
+                    .addGroup(panelImage1Layout.createSequentialGroup()
+                        .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(boxUsuario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(boxTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, 221, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregarPersona)
+                        .addGap(22, 22, 22)))
+                .addGap(16, 16, 16)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelImage1Layout.createSequentialGroup()
@@ -312,15 +324,15 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
                                     .addGroup(panelImage1Layout.createSequentialGroup()
                                         .addComponent(jLabel22)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(busquedaBoxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(busquedaBoxTipo, 0, 130, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel20)
-                                    .addComponent(txtDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                                    .addComponent(txtDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel21)
-                                    .addComponent(txtHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))))
+                                    .addComponent(txtHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))))
                         .addContainerGap())
                     .addGroup(panelImage1Layout.createSequentialGroup()
                         .addGap(184, 184, 184)
@@ -336,8 +348,10 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
                 .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelImage1Layout.createSequentialGroup()
                         .addComponent(jLabel15)
-                        .addGap(12, 12, 12)
-                        .addComponent(boxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(boxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregarPersona))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -353,7 +367,7 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnModif, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -404,6 +418,7 @@ public class MovimientosGUI extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox boxTipo;
     private javax.swing.JComboBox boxUsuario;
+    private javax.swing.JButton btnAgregarPersona;
     private javax.swing.JButton btnElim;
     private javax.swing.JButton btnModif;
     private javax.swing.JButton btnNuevoGuardar;

@@ -7,6 +7,8 @@ package Controladores;
 
 import ABMs.GestionMovimientos;
 import ABMs.GestionPersona;
+import Interfaces.AplicacionGUI;
+import Interfaces.CargarPersonaGUI;
 import Interfaces.MovimientosGUI;
 import Modelos.Articulo;
 import Modelos.Movimiento;
@@ -41,14 +43,19 @@ public class ControladorMovimientos implements ActionListener {
     GestionPersona gestionPersona;
     String desde;
     String hasta;
+    CargarPersonaGUI cargarPersonaGUI;
+    AplicacionGUI aplicacion;
     boolean apreteModificar;
 
-    public ControladorMovimientos(MovimientosGUI moviGUI) {
+    public ControladorMovimientos(MovimientosGUI moviGUI, AplicacionGUI a) {
         apreteModificar = false;
         movimientosGUI = moviGUI;
         movimientosGUI.setActionListener(this);
         gestionMovimientos = new GestionMovimientos();
         gestionPersona = new GestionPersona();
+        aplicacion = a;
+        cargarPersonaGUI = new CargarPersonaGUI(aplicacion, true);
+        cargarPersonaGUI.setActionListener(this);
         CargarPersonasBox();
 
         movimientosGUI.getTablaMovimientos().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -72,14 +79,14 @@ public class ControladorMovimientos implements ActionListener {
                 cargarMovimientos();
             }
         });
-        
+
         movimientosGUI.getTxtHasta().getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 cargarMovimientos();
             }
         });
-        
+
         movimientosGUI.getBusquedaBoxTipo().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cargarMovimientos();
@@ -94,7 +101,7 @@ public class ControladorMovimientos implements ActionListener {
         }
     }
 
-    private void cargarMovimientos(){
+    private void cargarMovimientos() {
         desde = dateToMySQLDate(movimientosGUI.getTxtDesde().getCalendar().getTime(), false);
         hasta = dateToMySQLDate(movimientosGUI.getTxtHasta().getCalendar().getTime(), false);
         movimientosGUI.getTablaMovimientosDefault().setRowCount(0);
@@ -111,14 +118,14 @@ public class ControladorMovimientos implements ActionListener {
             movimientosGUI.getTablaMovimientosDefault().addRow(row);
             total = total.add(m.getBigDecimal("monto"));
         }
-        if(!movimientosGUI.getBusquedaBoxTipo().getSelectedItem().equals("INGRESO") && !movimientosGUI.getBusquedaBoxTipo().getSelectedItem().equals("TODOS")){
+        if (!movimientosGUI.getBusquedaBoxTipo().getSelectedItem().equals("INGRESO") && !movimientosGUI.getBusquedaBoxTipo().getSelectedItem().equals("TODOS")) {
             movimientosGUI.getLblTotal().setText(total.setScale(2, RoundingMode.CEILING).toString());
-        }else{
+        } else {
             movimientosGUI.getLblTotal().setText("0.00");
         }
-       // Base.close();
+        // Base.close();
     }
-    
+
     public boolean DatosObligatoriosOK() {
         if ((!movimientosGUI.getBoxUsuario().getSelectedItem().equals("Seleccionar"))
                 && (!movimientosGUI.getBoxTipo().getSelectedItem().equals("Seleccionar"))
@@ -167,7 +174,7 @@ public class ControladorMovimientos implements ActionListener {
             row[4] = dateToMySQLDate(m.getDate("fecha"), true);
             movimientosGUI.getTablaMovimientosDefault().addRow(row);
         }
-       // Base.close();
+        // Base.close();
     }
 
     public void ObtenerDatosMovimientoSeleccionado() {
@@ -228,14 +235,14 @@ public class ControladorMovimientos implements ActionListener {
                                 JOptionPane.showMessageDialog(movimientosGUI, "Movimiento registrado exitosamente!", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 movimientosGUI.ApreteBotonGuardarEliminarCancelar();
                                 cargarMovimientos();
-                            }else{
+                            } else {
                                 JOptionPane.showMessageDialog(movimientosGUI, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         }
                     } else {
                         JOptionPane.showMessageDialog(movimientosGUI, "Falta seleccionar el usuario, el tipo de movimiento o el monto!", "Atencion!", JOptionPane.WARNING_MESSAGE);
                     }
-                }else{// boton guardar modificado
+                } else {// boton guardar modificado
                     if (DatosObligatoriosOK()) {
                         if (FormatoOK()) {
                             int row = movimientosGUI.getTablaMovimientos().getSelectedRow();
@@ -243,7 +250,7 @@ public class ControladorMovimientos implements ActionListener {
                                 JOptionPane.showMessageDialog(movimientosGUI, "Movimiento modificado exitosamente!", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 movimientosGUI.ApreteBotonGuardarEliminarCancelar();
                                 cargarMovimientos();
-                            }else{
+                            } else {
                                 JOptionPane.showMessageDialog(movimientosGUI, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         }
@@ -266,19 +273,39 @@ public class ControladorMovimientos implements ActionListener {
                 if (resp == JOptionPane.YES_OPTION) {
                     int row = movimientosGUI.getTablaMovimientos().getSelectedRow();
                     Movimiento m = gestionMovimientos.getMovimiento(String.valueOf(movimientosGUI.getTablaMovimientosDefault().getValueAt(row, 0)));
-                    if(gestionMovimientos.Eliminar(m)){
+                    if (gestionMovimientos.Eliminar(m)) {
                         cargarMovimientos();
                         JOptionPane.showMessageDialog(movimientosGUI, "Movimiento eliminado correctamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(movimientosGUI, "Ocurrio un error", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 movimientosGUI.ApreteBotonGuardarEliminarCancelar();
-                
+
             } else {
                 movimientosGUI.ApreteBotonGuardarEliminarCancelar();
                 apreteModificar = false;
             }
+        }
+
+        if (e.getSource().equals(movimientosGUI.getBtnAgregarPersona())) {
+            cargarPersonaGUI.setVisible(true);
+            cargarPersonaGUI.getTxtNombrePersona().setText("");
+        }
+        if (e.getSource().equals(cargarPersonaGUI.getBtnCargarPersona())) {
+            Persona p = new Persona();
+            abrirBase();
+            p.set("nyap", cargarPersonaGUI.getTxtNombrePersona().getText().toUpperCase());
+            if (p.saveIt()) {
+                JOptionPane.showMessageDialog(aplicacion, "Persona creada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(aplicacion, "Error", "Ocurrio un error.", JOptionPane.ERROR_MESSAGE);
+            }
+            Base.close();
+            cargarPersonaGUI.setVisible(false);
+            movimientosGUI.getBoxUsuario().removeAllItems();
+            movimientosGUI.getBoxUsuario().addItem("Seleccionar");
+            CargarPersonasBox();
         }
     }
 

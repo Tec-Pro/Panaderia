@@ -49,7 +49,7 @@ public class ControladorPrincipal implements ActionListener{
         
         
         movimientosGUI = new MovimientosGUI();
-        ControladorMovimientos controladorMovimientos = new ControladorMovimientos(movimientosGUI);
+        ControladorMovimientos controladorMovimientos = new ControladorMovimientos(movimientosGUI,aplicacionGUI);
         
         ventasGUI = new VentasGUI();
         ControladorVentas controladorVentas = new ControladorVentas(ventasGUI);

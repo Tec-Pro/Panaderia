@@ -43,6 +43,8 @@ public class GestionPersona {
         Base.close();
         return n;
     }
+    
+    
 
     private void abrirBase() {
         if (!Base.hasConnection()) {
