@@ -8,6 +8,8 @@ package Interfaces;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,7 +31,11 @@ public class AplicacionGUI extends javax.swing.JFrame {
     public JDesktopPane getEscritorio() {
         return Escritorio;
     }
-
+    
+    public JMenuItem getCrearBackup() {
+        return crearBackup;
+    }
+    
     public JButton getBtnVentas() {
         return btnVentas;
     }
@@ -47,6 +53,7 @@ public class AplicacionGUI extends javax.swing.JFrame {
         btnCargarVenta.addActionListener(ac);
         btnVentas.addActionListener(ac);
         btnArticulos.addActionListener(ac);
+        crearBackup.addActionListener(ac);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,11 +72,14 @@ public class AplicacionGUI extends javax.swing.JFrame {
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        salir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        crearBackup = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        tecPro = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setBorder(null);
+        setTitle("Gestion de panaderia");
 
         btnArticulos.setText("Articulos");
 
@@ -101,11 +111,36 @@ public class AplicacionGUI extends javax.swing.JFrame {
                 .addGap(0, 104, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("File");
+        jMenu1.setText("Archivo");
+
+        salir.setText("Salir");
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(salir);
+
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Backup");
+
+        crearBackup.setText("Crear Backup");
+        jMenu2.add(crearBackup);
+
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Acerca de");
+
+        tecPro.setText("Tec-Pro Software");
+        tecPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tecProActionPerformed(evt);
+            }
+        });
+        jMenu3.add(tecPro);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -127,6 +162,19 @@ public class AplicacionGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        int ret = JOptionPane.showConfirmDialog(this, "¿Desea salir de la aplicación?", "Cerrar aplicación", JOptionPane.YES_NO_OPTION);
+        if (ret == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_salirActionPerformed
+
+    private void tecProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tecProActionPerformed
+        AcercaDe acercaDe = new AcercaDe(this, true);
+        acercaDe.setLocationRelativeTo(this);
+        acercaDe.setVisible(true);
+    }//GEN-LAST:event_tecProActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -135,9 +183,13 @@ public class AplicacionGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnCargarVenta;
     private javax.swing.JButton btnMovimientos;
     private javax.swing.JButton btnVentas;
+    private javax.swing.JMenuItem crearBackup;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem salir;
+    private javax.swing.JMenuItem tecPro;
     // End of variables declaration//GEN-END:variables
 }

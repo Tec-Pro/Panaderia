@@ -14,6 +14,7 @@ import Modelos.Movimiento;
 import Modelos.Persona;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -31,6 +32,7 @@ public class ControladorPrincipal implements ActionListener{
     MovimientosGUI movimientosGUI;
     CargarVentasGUI cargarVentaGUI;
     VentasGUI ventasGUI;
+    GestionBackupBD gestionBackup;
     private final ArticulosGUI articulosGUI;
     
     
@@ -40,10 +42,11 @@ public class ControladorPrincipal implements ActionListener{
         } catch (Exception e) {
             e.printStackTrace();
         }
-         
+        
         aplicacionGUI = new AplicacionGUI();
         aplicacionGUI.setActionListener(this);
         aplicacionGUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
         
         movimientosGUI = new MovimientosGUI();
         ControladorMovimientos controladorMovimientos = new ControladorMovimientos(movimientosGUI);
@@ -63,6 +66,8 @@ public class ControladorPrincipal implements ActionListener{
         aplicacionGUI.getEscritorio().add(articulosGUI);
         
         aplicacionGUI.setVisible(true);
+        
+        
     }
     
     private void ActualizarListaMovimientos(){
@@ -120,6 +125,14 @@ public class ControladorPrincipal implements ActionListener{
         } 
         if(e.getSource().equals(aplicacionGUI.getBtnArticulos())){
             articulosGUI.setVisible(true);
+        }
+        if(e.getSource() == aplicacionGUI.getCrearBackup()){
+            gestionBackup = new GestionBackupBD();
+            gestionBackup.conectar();
+            gestionBackup.GuardarRutaBackup();
+            gestionBackup.CrearBackup();
+            String dir = (new File(System.getProperty("user.dir")).getAbsolutePath());
+            System.out.println(dir);
         }
     }
 }
