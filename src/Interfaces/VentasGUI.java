@@ -6,6 +6,8 @@
 package Interfaces;
 
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.util.Calendar;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -23,6 +25,8 @@ public class VentasGUI extends javax.swing.JInternalFrame {
     public VentasGUI() {
         initComponents();
         btnEliminarVenta.setEnabled(false);
+        txtDesde.setDate(Date.valueOf("1999-01-01"));
+        txtHasta.setDate(Calendar.getInstance().getTime());
         tablaVentasDefault = (DefaultTableModel) tablaVentas.getModel();
         tablaProductosDefault = (DefaultTableModel) tablaProductos.getModel();
     }

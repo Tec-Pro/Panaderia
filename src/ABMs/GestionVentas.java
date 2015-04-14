@@ -83,9 +83,9 @@ private int idVenta;
         return result;
     }
     
-    public LazyList<Venta> listarVentas(){
+    public LazyList<Venta> listarVentas(String desde, String hasta){
         abrirBase();
-        LazyList<Venta> res = Venta.findAll();
+        LazyList<Venta> res = Venta.where("fecha between ? and ?", desde, hasta);
         Base.close();
         return res;
     }
