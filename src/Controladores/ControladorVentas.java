@@ -122,7 +122,7 @@ public class ControladorVentas implements ActionListener {
         LazyList<Venta> ventas = gestionVentas.listarVentas(dateToMySQLDate(ventaGui.getTxtDesde().getDate(),false),dateToMySQLDate(ventaGui.getTxtHasta().getDate(),false));
         abrirBase();
         ventaGui.getTablaVentasDefault().setRowCount(0);
-        Double aux = 0.00;
+        float aux = 0;
         for (Venta v : ventas) {
             Object row[] = new Object[3];
             row[0] = v.get("id");
@@ -133,7 +133,7 @@ public class ControladorVentas implements ActionListener {
             aux += monto;
         }
         ventaGui.getLblTotal().setText("");
-        ventaGui.getLblTotal().setText((new BigDecimal(aux).setScale(2, RoundingMode.CEILING).toString()));
+        ventaGui.getLblTotal().setText(String.valueOf(aux));
         Base.close();
     }
 

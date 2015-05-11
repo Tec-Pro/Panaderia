@@ -51,6 +51,7 @@ public class ControladorArticulos implements ActionListener {
         
         articulosGui.getTxtBuscador().addKeyListener(new KeyAdapter(){
 
+            
             @Override
             public void keyReleased(KeyEvent evt){
                 cargarListaArt(gestionArticulos.buscarArticulo(articulosGui.getTxtBuscador().getText()));
@@ -67,7 +68,7 @@ public class ControladorArticulos implements ActionListener {
         articulosGui.getTxtDescripcion().setText(a.getString("descripcion"));
         articulosGui.getBoxTipo().setSelectedItem(a.getString("tipo"));
         articulosGui.getTxtNombre().setText(a.getString("nombre"));
-        articulosGui.getTxtPrecio().setText(a.getBigDecimal("precio").setScale(2, RoundingMode.CEILING).toString());
+        articulosGui.getTxtPrecio().setText(a.getFloat("precio").toString());
     }
 
     @Override
@@ -98,7 +99,7 @@ public class ControladorArticulos implements ActionListener {
                             a.setString("codigo", articulosGui.getTxtCodigo().getText());
                             a.setString("nombre", articulosGui.getTxtNombre().getText());
                             a.setString("tipo", articulosGui.getBoxTipo().getSelectedItem().toString());
-                            a.setBigDecimal("precio", articulosGui.getTxtPrecio().getText().replace(",", "."));
+                            a.setFloat("precio", articulosGui.getTxtPrecio().getText());
                             a.setString("descripcion", articulosGui.getTxtDescripcion().getText());
                             gestionArticulos.Alta(a);
                             JOptionPane.showMessageDialog(articulosGui, "Producto creado exitosamente!", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);

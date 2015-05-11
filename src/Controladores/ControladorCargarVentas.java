@@ -183,7 +183,7 @@ public class ControladorCargarVentas implements ActionListener, CellEditorListen
                     cargarVentaGUI.getTablaVentaDefault().setRowCount(0);
                     cargarVentaGUI.getTxtCodigo().setText("");
                     cargarVentaGUI.getTxtTotal().setText("");
-                    controladorVentas.cargarListaVentas();
+                    controladorVentas.actualizarListaVentas();
                 } else {
                     JOptionPane.showMessageDialog(cargarVentaGUI, "Ocurrio un error, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
                 }
